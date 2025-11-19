@@ -1,0 +1,33 @@
+name: CI pipeline
+
+# Trigger
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      #Check out the repo code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      #Log in docker
+      - name: Login to Docker Hub
+        uses: docker/login-actions@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      #Build the image and push to Docker Hub
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          #TAG with lastest and specify hash for versioning
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/my-devops-app:latest
+            ${{ secrets.DOCKER_USERNAME }}/my-devops-app:${{ github.sha }}
