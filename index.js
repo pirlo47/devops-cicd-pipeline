@@ -3,10 +3,6 @@ const app = express();
 const os = require('os');
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello, DevOps!');
-});
-
 app.use(express.static('public'));
 
 //The new system health route
