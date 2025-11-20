@@ -7,6 +7,8 @@ app.get('/', (req, res) => {
     res.send('Hello, DevOps!');
 });
 
+app.use(express.static('public'));
+
 //The new system health route
 app.get('/health', (req, res) => {
     const healthCheck = {
